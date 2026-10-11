@@ -1,6 +1,6 @@
 import pytest
 
-from taskflow.core import agregar, eliminar
+from taskflow.core import GestorTareas
 
 
 def test_eliminar_quita_la_tarea():
