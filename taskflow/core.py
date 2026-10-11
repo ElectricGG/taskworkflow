@@ -1,22 +1,44 @@
-"""Operaciones básicas para una lista de tareas en memoria."""
+"""Lógica de dominio para un gestor de tareas en memoria."""
+
+from dataclasses import dataclass
 
 
-def agregar(tareas, titulo):
-    """Añade una tarea pendiente y devuelve la lista modificada."""
-    tareas.append({"titulo": titulo, "completada": False})
-    return tareas
+@dataclass
+class Tarea:
+    """Una tarea identificada de forma única dentro del gestor."""
+
+    id: int
+    titulo: str
+    completada: bool = False
 
 
-def completar(tareas, indice):
-    """Marca como completada la tarea situada en *indice*."""
-    tareas[indice]["completada"] = True
-    return tareas
+class GestorTareas:
+    """Administra tareas sin reutilizar identificadores eliminados."""
 
+    def __init__(self):
+        self._tareas: list[Tarea] = []
+        self._siguiente_id = 1
 
-def eliminar(tareas, indice):
-    """Elimina y devuelve la tarea situada en *indice*.
+    def agregar(self, titulo: str) -> Tarea:
+        """Crea, guarda y devuelve una tarea pendiente."""
+        tarea = Tarea(id=self._siguiente_id, titulo=titulo)
+        self._tareas.append(tarea)
+        self._siguiente_id += 1
+        return tarea
 
-    Python genera ``IndexError`` cuando el índice no existe, lo que permite al
-    consumidor tratar explícitamente una selección inválida.
-    """
-    return tareas.pop(indice)
+    def listar(self) -> list[Tarea]:
+        """Devuelve una copia de las tareas registradas."""
+        return list(self._tareas)
+
+    def buscar(self, tarea_id: int) -> Tarea:
+        """Busca una tarea por identificador o lanza ``KeyError``."""
+        for tarea in self._tareas:
+            if tarea.id == tarea_id:
+                return tarea
+        raise KeyError(f"No existe la tarea con id {tarea_id}")
+
+    def eliminar(self, tarea_id: int) -> Tarea:
+        """Elimina y devuelve la tarea indicada por su identificador."""
+        tarea = self.buscar(tarea_id)
+        self._tareas.remove(tarea)
+        return tarea
