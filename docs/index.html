@@ -1,25 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Taskflow</title>
-    <style>
-      :root { color-scheme: light; font-family: system-ui, sans-serif; }
-      body { max-width: 46rem; margin: 5rem auto; padding: 0 1.5rem; color: #172033; }
-      h1 { color: #2563eb; font-size: 3rem; margin-bottom: .25rem; }
-      .tag { color: #526079; font-size: 1.15rem; }
-      code { background: #edf2ff; border-radius: .25rem; padding: .15rem .35rem; }
-    </style>
-  </head>
-  <body>
-    <h1>Taskflow</h1>
-    <p class="tag">Un gestor de tareas simple, probado y desplegado automáticamente.</p>
-    <h2>Características</h2>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; background: #0a1230; color: #e9edff; }
+    h1 { color: #7d97ff; }
+    .card { background: #121e4b; border: 1px solid #26356f; border-radius: 12px; padding: 16px 20px; margin: 16px 0; }
+    a { color: #f2a649; }
+    li { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <h1>TaskFlow</h1>
+  <p>Gestor de tareas en Python · Proyecto integrador DevOps &amp; Project Management.</p>
+  <p><img src="https://github.com/USUARIO/taskflow/actions/workflows/ci.yml/badge.svg" alt="Estado del CI"></p>
+
+  <div class="card">
+    <h2>Equipo</h2>
+    <ul><li>Nombre Apellido (@usuario)</li></ul>
+  </div>
+
+  <div class="card">
+    <h2>Funcionalidades</h2>
     <ul>
-      <li>Crear y completar tareas.</li>
-      <li>Eliminar tareas con <code>eliminar(tareas, indice)</code>.</li>
-      <li>Pruebas automáticas con GitHub Actions.</li>
+      <li>Agregar tareas con prioridad</li>
+      <li>Completar y listar tareas pendientes</li>
+      <li>Eliminar tareas</li>
     </ul>
-  </body>
+  </div>
+
+  <div class="card">
+    <h2>Avance</h2>
+    <ul>
+      <li>✅ Hito 1 — Repositorio y código base</li>
+      <li>✅ Hito 2 — GitHub Flow y CI/CD</li>
+      <li>⬜ Hito 3 — Jira y sprint</li>
+    </ul>
+  </div>
+
+  <p><a href="https://github.com/USUARIO/taskflow">Ver el repositorio</a></p>
+</body>
 </html>

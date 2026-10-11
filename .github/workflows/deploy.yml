@@ -1,9 +1,9 @@
-name: Publicar sitio en GitHub Pages
+name: Deploy
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches: [main]      # cada merge a main publica el sitio
+  workflow_dispatch:      # y también se puede lanzar a mano
 
 permissions:
   contents: read
@@ -18,32 +18,25 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Obtener el código
-        uses: actions/checkout@v4
-      - name: Configurar Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - name: Instalar dependencias de prueba
-        run: python -m pip install --upgrade pip pytest
-      - name: Ejecutar pruebas
-        run: python -m pytest
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m pytest
 
   deploy:
-    needs: test
+    needs: test           # solo publica si las pruebas pasan
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Obtener el código
-        uses: actions/checkout@v4
-      - name: Configurar Pages
-        uses: actions/configure-pages@v5
-      - name: Cargar artefacto del sitio
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v5
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: docs
-      - name: Publicar en GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - id: deployment
+        uses: actions/deploy-pages@v5
