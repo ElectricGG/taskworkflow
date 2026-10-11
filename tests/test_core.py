@@ -1,24 +1,23 @@
 import pytest
 
-from taskflow.core import agregar, eliminar
+from taskflow.core import GestorTareas
 
 
-def test_eliminar_quita_la_tarea_indicada():
-    tareas = [{"titulo": "Documentar", "completada": False}, {"titulo": "Probar", "completada": False}]
-
-    eliminada = eliminar(tareas, 0)
-
-    assert eliminada["titulo"] == "Documentar"
-    assert tareas == [{"titulo": "Probar", "completada": False}]
-
-
-def test_eliminar_devuelve_la_tarea_eliminada():
-    tareas = []
-    agregar(tareas, "Desplegar")
-
-    assert eliminar(tareas, 0) == {"titulo": "Desplegar", "completada": False}
+def test_eliminar_quita_la_tarea():
+    gestor = GestorTareas()
+    gestor.agregar("A")
+    gestor.agregar("B")
+    gestor.eliminar(1)
+    assert [t.id for t in gestor.listar()] == [2]
 
 
-def test_eliminar_con_indice_invalido_lanza_error():
-    with pytest.raises(IndexError):
-        eliminar([], 0)
+def test_eliminar_no_reutiliza_ids():
+    gestor = GestorTareas()
+    gestor.agregar("A")
+    gestor.eliminar(1)
+    assert gestor.agregar("B").id == 2
+
+
+def test_eliminar_inexistente_lanza_error():
+    with pytest.raises(KeyError):
+        GestorTareas().eliminar(42)
